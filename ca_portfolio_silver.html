@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CA Rahul Sharma — Chartered Accountant</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:        #f7f9fc;
+  --bg2:       #eef2f7;
+  --bg3:       #e4eaf2;
+  --ink:       #0d1a2a;
+  --ink-soft:  #2c3e52;
+  --muted:     #6a7e94;
+  --line:      rgba(120,150,185,0.18);
+
+  /* Silver palette */
+  --sv:        #7a9ab8;      /* core silver-steel */
+  --sv-light:  #a8c0d4;     /* lighter silver */
+  --sv-bright: #c8d8e8;     /* bright silver / shine */
+  --sv-pale:   #dde8f2;     /* very pale silver */
+  --sv-deep:   #4e6e8a;     /* deep steel */
+  --sv-grad:   linear-gradient(135deg, #8fb0cc 0%, #c8d8e8 50%, #8fb0cc 100%);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Outfit',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── Noise grain ── */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ── Custom cursor ── */
+#cur { position:fixed; width:9px; height:9px; border-radius:50%; background:var(--sv); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+#ring { position:fixed; width:34px; height:34px; border:1.5px solid var(--sv-light); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:300;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.3rem 7vw;
+  transition:background .4s,box-shadow .4s;
+}
+nav.scrolled {
+  background:rgba(247,249,252,0.96);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 0 var(--line);
+}
+.nav-logo {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.1rem; color:var(--sv-deep); letter-spacing:.07em;
+  display:flex; align-items:center; gap:.7rem;
+}
+.nav-logo::before {
+  content:''; display:block; width:28px; height:28px;
+  border:1.5px solid var(--sv-light);
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; cursor:none;
+  transition:color .2s;
+}
+.nav-links a:hover { color:var(--sv-deep); }
+.nav-cta {
+  padding:.6rem 1.6rem;
+  border:1.5px solid var(--sv-light);
+  font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--sv-deep); text-decoration:none; cursor:none;
+  transition:all .3s;
+}
+.nav-cta:hover { background:var(--sv-pale); border-color:var(--sv); }
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:55% 45%;
+  position:relative; overflow:hidden;
+  background:var(--bg);
+}
+
+/* Animated geometric mesh background */
+.hero-mesh {
+  position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+}
+.hero-mesh svg {
+  position:absolute; right:0; top:0; width:55%; height:100%;
+  opacity:.06;
+}
+
+/* Diagonal separator */
+.hero-diagonal {
+  position:absolute; top:0; right:45%; bottom:0; width:120px;
+  background:var(--bg); transform:skewX(-3deg);
+  z-index:1; pointer-events:none;
+}
+
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:14vh 5vw 14vh 7vw;
+  position:relative; z-index:2;
+}
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:.7rem;
+  padding:.45rem 1.1rem; margin-bottom:2.2rem;
+  border:1px solid var(--sv-bright);
+  background:var(--sv-pale);
+  font-size:.66rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--sv-deep); width:fit-content;
+  opacity:0; animation:fadeUp .7s .15s forwards;
+}
+.hero-badge::before { content:'●'; color:var(--sv); font-size:.5rem; }
+
+.hero-name {
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(3rem,5.5vw,5.5rem);
+  font-weight:700; line-height:1.0; color:var(--ink);
+  opacity:0; animation:fadeUp .8s .3s forwards;
+}
+.hero-name em {
+  font-style:italic; font-weight:400;
+  background:var(--sv-grad); -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent; background-clip:text;
+  background-size:200% auto;
+  animation:shimmerText 4s linear infinite;
+}
+
+.hero-cred {
+  font-family:'Libre Baskerville',serif; font-style:italic;
+  font-size:1.1rem; color:var(--muted); margin-top:.6rem; margin-bottom:2.5rem;
+  letter-spacing:.04em;
+  opacity:0; animation:fadeUp .8s .45s forwards;
+}
+
+.hero-desc {
+  font-size:.98rem; color:var(--ink-soft); line-height:1.85;
+  max-width:400px;
+  border-left:2px solid var(--sv-bright); padding-left:1.3rem;
+  opacity:0; animation:fadeUp .8s .6s forwards;
+}
+
+.hero-cta {
+  display:flex; gap:1rem; margin-top:3rem;
+  opacity:0; animation:fadeUp .8s .75s forwards;
+}
+.btn {
+  display:inline-flex; align-items:center; gap:.6rem;
+  padding:.85rem 2.2rem; font-size:.72rem;
+  font-family:'Outfit',sans-serif; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase;
+  text-decoration:none; cursor:none; transition:all .3s;
+  position:relative; overflow:hidden;
+}
+.btn-silver {
+  background:var(--sv-deep); color:#fff;
+}
+.btn-silver::before {
+  content:''; position:absolute; inset:0;
+  background:var(--sv); transform:translateX(-101%); transition:transform .35s;
+}
+.btn-silver:hover::before { transform:translateX(0); }
+.btn-silver span { position:relative; z-index:1; }
+.btn-ghost {
+  border:1.5px solid var(--sv-bright); color:var(--sv-deep);
+  background:transparent;
+}
+.btn-ghost:hover { background:var(--sv-pale); border-color:var(--sv-light); }
+
+/* Hero right — avatar panel */
+.hero-right {
+  background:var(--bg2); position:relative; overflow:hidden;
+}
+.hero-right-inner {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:0;
+}
+/* Silver metallic avatar */
+.avatar-wrap {
+  position:relative; animation:floatY 5s ease-in-out infinite;
+}
+.avatar-circle {
+  width:240px; height:240px; border-radius:50%;
+  background:linear-gradient(145deg, #ccd8e4 0%, #a8b8c8 40%, #d4e0ec 70%, #b0c0d0 100%);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 20px 60px rgba(74,110,138,.2), 0 4px 20px rgba(120,160,200,.3),
+             inset 0 2px 4px rgba(255,255,255,.5);
+  position:relative; overflow:hidden;
+}
+.avatar-circle::before {
+  content:''; position:absolute; top:-30%; left:-30%; width:60%; height:60%;
+  background:radial-gradient(circle, rgba(255,255,255,.5) 0%, transparent 70%);
+  border-radius:50%;
+}
+.avatar-initials {
+  font-family:'Libre Baskerville',serif;
+  font-size:5.5rem; font-weight:700;
+  color:rgba(255,255,255,.75); line-height:1; letter-spacing:.04em;
+  position:relative; z-index:1; text-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.avatar-ring-1 {
+  position:absolute; inset:-18px; border-radius:50%;
+  border:1px solid rgba(168,192,212,.4);
+}
+.avatar-ring-2 {
+  position:absolute; inset:-36px; border-radius:50%;
+  border:1px solid rgba(168,192,212,.2);
+  animation:rotateSlow 20s linear infinite;
+}
+.avatar-ring-2::before {
+  content:'◆'; position:absolute; top:-6px; left:50%; transform:translateX(-50%);
+  font-size:.5rem; color:var(--sv-light);
+}
+
+/* Floating info chips */
+.chip {
+  position:absolute;
+  background:var(--bg); border:1px solid var(--line);
+  box-shadow:0 4px 20px rgba(0,0,0,.07);
+  padding:.8rem 1.2rem;
+  animation:floatY 5s ease-in-out infinite;
+}
+.chip-top { top:12%; right:6%; animation-delay:.8s; }
+.chip-bot { bottom:12%; left:5%; animation-delay:1.6s; }
+.chip-mid { top:50%; right:4%; transform:translateY(-50%); animation-delay:.3s; }
+.chip-num {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.6rem; font-weight:700; color:var(--sv-deep); line-height:1;
+}
+.chip-lbl { font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+
+/* ── Credential bar ── */
+.cred-bar {
+  background:var(--ink); position:relative; z-index:3;
+  display:flex; justify-content:center; flex-wrap:wrap; gap:0;
+}
+.cred-item {
+  padding:1.4rem 3rem; border-right:1px solid rgba(255,255,255,.06);
+  text-align:center; flex:1; min-width:160px;
+  transition:background .3s;
+}
+.cred-item:hover { background:rgba(120,154,184,.08); }
+.cred-item:last-child { border-right:none; }
+.cred-ico { font-size:1.4rem; margin-bottom:.35rem; }
+.cred-val {
+  font-family:'Libre Baskerville',serif;
+  font-size:.95rem; color:var(--sv-bright); font-weight:400;
+}
+.cred-lbl { font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; color:#6a7e94; margin-top:.2rem; }
+
+/* ── Ticker ── */
+.ticker {
+  background:var(--sv-deep); overflow:hidden;
+  white-space:nowrap; padding:.6rem 0; position:relative; z-index:3;
+}
+.ticker-inner { display:inline-block; animation:ticker 24s linear infinite; }
+.ticker span {
+  display:inline-block; font-size:.6rem; font-weight:500;
+  letter-spacing:.24em; text-transform:uppercase;
+  color:rgba(255,255,255,.85); padding:0 2.5rem;
+}
+.ticker span::after { content:'◆'; margin-left:2.5rem; opacity:.3; }
+
+/* ════════════════════════════════════════
+   SECTIONS
+════════════════════════════════════════ */
+section { position:relative; z-index:2; }
+.si { max-width:1180px; margin:0 auto; padding:8rem 7vw; }
+
+.sec-tag {
+  font-size:.63rem; letter-spacing:.38em; text-transform:uppercase;
+  color:var(--sv-deep); display:flex; align-items:center; gap:.8rem;
+  margin-bottom:.9rem;
+}
+.sec-tag::before { content:''; width:28px; height:1.5px; background:var(--sv-light); }
+
+.sec-h {
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:700; line-height:1.1; color:var(--ink);
+}
+.sec-h em { font-style:italic; font-weight:400; color:var(--sv-deep); }
+
+.sep { height:1px; background:linear-gradient(to right,transparent,var(--sv-light),transparent); opacity:.6; position:relative; z-index:2; }
+
+/* ════════════════════════════════════════
+   ABOUT
+════════════════════════════════════════ */
+#about { background:var(--bg); }
+.about-wrap {
+  display:grid; grid-template-columns:1fr 1.1fr;
+  gap:6rem; align-items:center; margin-top:3.5rem;
+}
+.about-lead {
+  font-family:'Libre Baskerville',serif; font-style:italic;
+  font-size:1.22rem; font-weight:400; color:var(--sv-deep);
+  line-height:1.7; margin-bottom:1.8rem;
+}
+.about-body {
+  font-size:.97rem; color:var(--ink-soft); line-height:1.95;
+}
+.about-body strong { color:var(--ink); font-weight:600; }
+
+.about-pills {
+  display:flex; flex-wrap:wrap; gap:.7rem; margin-top:2rem;
+}
+.pill {
+  padding:.4rem 1rem; border:1px solid var(--sv-bright);
+  font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--sv-deep); background:var(--sv-pale);
+  transition:all .3s;
+}
+.pill:hover { background:var(--sv-bright); border-color:var(--sv-light); }
+
+/* Profile card */
+.profile-card {
+  background:var(--bg2); border:1px solid var(--line);
+  position:relative; overflow:hidden; padding:3rem;
+}
+.profile-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(to right, var(--sv), var(--sv-bright), var(--sv));
+  background-size:200% auto; animation:shimmerBg 3s linear infinite;
+}
+.pc-avatar {
+  width:90px; height:90px; border-radius:50%;
+  background:linear-gradient(145deg,#ccd8e4,#a8b8c8,#d4e0ec);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 24px rgba(74,110,138,.2);
+}
+.pc-initials {
+  font-family:'Libre Baskerville',serif;
+  font-size:2rem; font-weight:700; color:rgba(255,255,255,.8);
+}
+.pc-name {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.55rem; font-weight:700; color:var(--ink); margin-bottom:.2rem;
+}
+.pc-deg { font-size:.82rem; color:var(--muted); margin-bottom:1.5rem; }
+
+.pc-rows { display:flex; flex-direction:column; gap:0; }
+.pc-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:.9rem 0; border-bottom:1px solid var(--line);
+  font-size:.82rem;
+}
+.pc-row:last-child { border-bottom:none; }
+.pc-k { color:var(--muted); letter-spacing:.06em; }
+.pc-v { color:var(--ink-soft); font-weight:500; text-align:right; }
+
+/* ════════════════════════════════════════
+   SERVICES
+════════════════════════════════════════ */
+#services { background:var(--bg2); }
+.svc-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; margin-top:3.5rem;
+}
+.svc {
+  background:var(--bg); border:1px solid var(--line);
+  padding:2.4rem 2rem; position:relative; overflow:hidden;
+  transition:all .35s; cursor:none;
+}
+.svc::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:2px;
+  background:linear-gradient(to right,var(--sv),var(--sv-bright));
+  transition:width .4s;
+}
+.svc:hover { transform:translateY(-5px); box-shadow:0 12px 40px rgba(78,110,138,.1); }
+.svc:hover::after { width:100%; }
+
+.svc-ico { font-size:2rem; margin-bottom:1.4rem; display:block; transition:transform .35s; }
+.svc:hover .svc-ico { transform:scale(1.15) rotate(-8deg); }
+.svc-title {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.25rem; font-weight:700; color:var(--ink); margin-bottom:.7rem;
+}
+.svc-body { font-size:.86rem; color:var(--muted); line-height:1.75; }
+.svc-more {
+  display:inline-block; margin-top:1.3rem; font-size:.65rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--sv-deep);
+  opacity:0; transform:translateX(-5px); transition:all .3s;
+}
+.svc:hover .svc-more { opacity:1; transform:translateX(0); }
+
+/* ════════════════════════════════════════
+   WHY CHOOSE US
+════════════════════════════════════════ */
+#why { background:var(--bg); }
+.why-grid {
+  display:grid; grid-template-columns:1fr 1.2fr;
+  gap:6rem; align-items:center; margin-top:3.5rem;
+}
+.why-list { display:flex; flex-direction:column; gap:0; margin-top:2rem; }
+.why-item {
+  display:flex; gap:1.5rem; align-items:flex-start;
+  padding:1.6rem 0; border-bottom:1px solid var(--line);
+  transition:background .3s;
+}
+.why-item:first-child { padding-top:.5rem; }
+.why-num {
+  font-family:'Libre Baskerville',serif;
+  font-size:2rem; font-weight:700;
+  color:var(--sv-bright); line-height:1; flex-shrink:0; width:36px;
+  transition:color .3s;
+}
+.why-item:hover .why-num { color:var(--sv); }
+.why-ttl {
+  font-weight:600; color:var(--ink); margin-bottom:.3rem; font-size:.97rem;
+}
+.why-desc { font-size:.86rem; color:var(--muted); line-height:1.7; }
+
+/* Right side — big stat feature */
+.why-feature {
+  background:var(--bg2); border:1px solid var(--line);
+  padding:3.5rem; text-align:center; position:relative; overflow:hidden;
+}
+.why-feature::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,transparent 60%, rgba(168,192,212,.08) 100%);
+}
+.big-num {
+  font-family:'Libre Baskerville',serif;
+  font-size:7rem; font-weight:700; line-height:1;
+  background:var(--sv-grad); -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent; background-clip:text;
+  background-size:200% auto; animation:shimmerText 4s linear infinite;
+}
+.big-lbl { font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-top:.5rem; }
+.why-divider { width:60px; height:1px; background:var(--sv-bright); margin:2rem auto; }
+.why-sub-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); }
+.wss { background:var(--bg2); padding:1.5rem; text-align:center; }
+.wss-n {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.9rem; font-weight:700; color:var(--sv-deep);
+}
+.wss-l { font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-top:.2rem; }
+
+/* ════════════════════════════════════════
+   JOURNEY / TIMELINE
+════════════════════════════════════════ */
+#journey { background:var(--bg2); }
+.timeline { margin-top:3.5rem; position:relative; }
+.timeline::before {
+  content:''; position:absolute; left:220px; top:0; bottom:0;
+  width:1px; background:linear-gradient(to bottom, transparent, var(--sv-bright), transparent);
+}
+.tl-item {
+  display:grid; grid-template-columns:200px 1fr;
+  gap:3rem; padding:2.2rem 0;
+  border-bottom:1px solid var(--line); position:relative;
+}
+.tl-item:last-child { border-bottom:none; }
+.tl-year {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.5rem; font-weight:700; color:var(--sv-light);
+  text-align:right; padding-right:2rem;
+  align-self:start; padding-top:.15rem;
+}
+/* Dot on line */
+.tl-item::before {
+  content:''; position:absolute; left:214px; top:2.6rem;
+  width:13px; height:13px; border-radius:50%;
+  background:var(--sv-bright); border:2px solid var(--sv);
+  box-shadow:0 0 0 4px var(--bg2);
+}
+.tl-right { padding-left:2rem; }
+.tl-title {
+  font-weight:600; font-size:1rem; color:var(--ink); margin-bottom:.3rem;
+}
+.tl-org { font-size:.82rem; color:var(--sv-deep); margin-bottom:.5rem; letter-spacing:.04em; }
+.tl-desc { font-size:.88rem; color:var(--muted); line-height:1.75; }
+
+/* ════════════════════════════════════════
+   ACHIEVEMENTS
+════════════════════════════════════════ */
+#achieve { background:var(--ink); }
+.ach-header .sec-tag { color:var(--sv-light); }
+.ach-header .sec-tag::before { background:var(--sv); }
+.ach-header .sec-h { color:#f0f4f8; }
+.ach-header .sec-h em { color:var(--sv-light); }
+
+.ach-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:rgba(120,154,184,.12);
+  margin-top:3.5rem;
+  border:1px solid rgba(120,154,184,.12);
+}
+.ach-box {
+  background:var(--ink); padding:2.8rem 2rem; text-align:center;
+  position:relative; overflow:hidden; transition:background .3s;
+}
+.ach-box::before {
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:0; height:2px;
+  background:linear-gradient(to right,var(--sv),var(--sv-bright));
+  transition:width .4s;
+}
+.ach-box:hover { background:rgba(120,154,184,.05); }
+.ach-box:hover::before { width:100%; }
+.ach-ico { font-size:2rem; margin-bottom:1rem; display:block; }
+.ach-n {
+  font-family:'Libre Baskerville',serif;
+  font-size:2.8rem; font-weight:700;
+  background:var(--sv-grad); -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent; background-clip:text;
+  background-size:200% auto; animation:shimmerText 4s linear infinite;
+  line-height:1;
+}
+.ach-l { font-size:.65rem; letter-spacing:.18em; text-transform:uppercase; color:#5a6a7a; margin-top:.5rem; }
+
+/* ════════════════════════════════════════
+   CONTACT
+════════════════════════════════════════ */
+#contact { background:var(--bg); }
+.contact-wrap {
+  display:grid; grid-template-columns:1.1fr 1fr;
+  gap:6rem; margin-top:4rem; align-items:start;
+}
+
+.contact-intro {
+  font-size:.98rem; color:var(--ink-soft); line-height:1.85;
+  margin-top:1.5rem; margin-bottom:2.5rem;
+}
+.citem {
+  display:flex; gap:1.4rem; align-items:flex-start;
+  padding:1.6rem 0; border-bottom:1px solid var(--line);
+}
+.citem:last-of-type { border-bottom:none; }
+.cico {
+  width:46px; height:46px; flex-shrink:0;
+  border:1px solid var(--sv-bright);
+  background:var(--sv-pale);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; transition:all .3s;
+}
+.citem:hover .cico { background:var(--sv-deep); border-color:var(--sv-deep); }
+.clbl { font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:.3rem; }
+.cval { font-size:.97rem; color:var(--ink); }
+.cval a { color:inherit; text-decoration:none; transition:color .2s; }
+.cval a:hover { color:var(--sv-deep); }
+
+/* Social links */
+.socials { display:flex; flex-direction:column; gap:.8rem; margin-top:2rem; }
+.sl {
+  display:flex; align-items:center; gap:1.1rem;
+  padding:1rem 1.4rem; border:1px solid var(--line);
+  text-decoration:none; color:var(--ink-soft); font-size:.88rem;
+  background:var(--bg2); transition:all .3s; cursor:none;
+}
+.sl:hover { border-color:var(--sv-light); background:var(--sv-pale); color:var(--sv-deep); padding-left:1.9rem; }
+.sl .arr { margin-left:auto; color:var(--sv); opacity:0; transition:opacity .3s; }
+.sl:hover .arr { opacity:1; }
+
+/* Appointment card */
+.appt-card {
+  background:var(--bg2); border:1px solid var(--line);
+  padding:2.8rem; position:relative; overflow:hidden;
+}
+.appt-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(to right,var(--sv),var(--sv-bright),var(--sv));
+  background-size:200% auto; animation:shimmerBg 3s linear infinite;
+}
+.appt-title {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.4rem; font-weight:700; color:var(--ink); margin-bottom:.7rem;
+}
+.appt-desc { font-size:.88rem; color:var(--muted); line-height:1.75; margin-bottom:2rem; }
+.appt-avail {
+  display:flex; flex-direction:column; gap:.6rem; margin-bottom:2rem;
+}
+.avail-row {
+  display:flex; justify-content:space-between;
+  padding:.7rem 0; border-bottom:1px solid var(--line);
+  font-size:.84rem;
+}
+.avail-row:last-child { border-bottom:none; }
+.avail-day { color:var(--muted); }
+.avail-hrs { color:var(--ink-soft); font-weight:500; }
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+footer {
+  background:var(--ink); padding:2.8rem 7vw;
+  display:flex; justify-content:space-between; align-items:center;
+  position:relative; z-index:2;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.foot-brand {
+  font-family:'Libre Baskerville',serif;
+  font-size:1.05rem; color:var(--sv-bright);
+}
+.foot-links { display:flex; gap:2rem; }
+.foot-links a {
+  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+  color:#5a6a7a; text-decoration:none; cursor:none; transition:color .2s;
+}
+.foot-links a:hover { color:var(--sv-light); }
+.foot-copy { font-size:.68rem; color:#3a4a5a; letter-spacing:.08em; }
+
+/* ════════════════════════════════════════
+   REVEAL / ANIMATIONS
+════════════════════════════════════════ */
+.r { opacity:0; transform:translateY(32px); transition:opacity .8s,transform .8s; }
+.r.v { opacity:1; transform:translateY(0); }
+.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+.d4{transition-delay:.4s} .d5{transition-delay:.5s} .d6{transition-delay:.6s}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+@keyframes rotateSlow { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes shimmerText {
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+@keyframes shimmerBg {
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{height:55vh;order:-1}
+  .hero-left{padding:5rem 6vw 4rem}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .ach-grid{grid-template-columns:1fr 1fr}
+  .about-wrap,.why-grid,.contact-wrap{grid-template-columns:1fr;gap:3rem}
+  .why-feature{padding:2.5rem}
+  .timeline::before{left:0;display:none}
+  .tl-item{grid-template-columns:1fr;gap:.5rem;padding:1.5rem 0}
+  .tl-item::before{display:none}
+  .tl-year{text-align:left;padding-right:0;font-size:1.1rem}
+  .tl-right{padding-left:0}
+  footer{flex-direction:column;gap:1.5rem;text-align:center}
+  .foot-links{display:none}
+  nav{display:none}
+}
+@media(max-width:600px){
+  .svc-grid,.ach-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">R.S.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Consultation</a>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-mesh">
+    <svg viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="450" cy="450" r="120" stroke="#7a9ab8" stroke-width="1"/>
+      <circle cx="450" cy="450" r="210" stroke="#7a9ab8" stroke-width="1"/>
+      <circle cx="450" cy="450" r="300" stroke="#7a9ab8" stroke-width="1"/>
+      <circle cx="450" cy="450" r="390" stroke="#7a9ab8" stroke-width=".8"/>
+      <circle cx="450" cy="450" r="440" stroke="#7a9ab8" stroke-width=".4"/>
+      <line x1="0" y1="450" x2="900" y2="450" stroke="#7a9ab8" stroke-width=".5"/>
+      <line x1="450" y1="0" x2="450" y2="900" stroke="#7a9ab8" stroke-width=".5"/>
+      <line x1="0" y1="0" x2="900" y2="900" stroke="#7a9ab8" stroke-width=".3"/>
+      <line x1="900" y1="0" x2="0" y2="900" stroke="#7a9ab8" stroke-width=".3"/>
+    </svg>
+  </div>
+
+  <div class="hero-left">
+    <p class="hero-badge">Chartered Accountant · ICAI</p>
+    <h1 class="hero-name">Rahul<br><em>Sharma</em></h1>
+    <p class="hero-cred">B.Com (Hons.) · FCA · DISA</p>
+    <p class="hero-desc">
+      A practising Chartered Accountant with over a decade of expertise in direct taxation,
+      statutory audit, GST compliance, and corporate advisory —
+      committed to precision, integrity, and timely delivery.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-silver"><span>Book a Consultation</span></a>
+      <a href="#services" class="btn btn-ghost">Explore Services</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+          <span class="avatar-initials">RS</span>
+        </div>
+        <div class="avatar-ring-1"></div>
+        <div class="avatar-ring-2"></div>
+      </div>
+    </div>
+    <div class="chip chip-top">
+      <div class="chip-num">FCA</div>
+      <div class="chip-lbl">ICAI Fellow</div>
+    </div>
+    <div class="chip chip-mid">
+      <div class="chip-num">10+</div>
+      <div class="chip-lbl">Years Active</div>
+    </div>
+    <div class="chip chip-bot">
+      <div class="chip-num">500+</div>
+      <div class="chip-lbl">Clients Served</div>
+    </div>
+  </div>
+</section>
+
+<!-- CRED BAR -->
+<div class="cred-bar">
+  <div class="cred-item">
+    <div class="cred-ico">🎓</div>
+    <div class="cred-val">Fellow Chartered Accountant</div>
+    <div class="cred-lbl">Designation</div>
+  </div>
+  <div class="cred-item">
+    <div class="cred-ico">🪪</div>
+    <div class="cred-val">ICAI M. No. 123456</div>
+    <div class="cred-lbl">Membership</div>
+  </div>
+  <div class="cred-item">
+    <div class="cred-ico">💻</div>
+    <div class="cred-val">DISA Certified</div>
+    <div class="cred-lbl">Information Systems Audit</div>
+  </div>
+  <div class="cred-item">
+    <div class="cred-ico">📍</div>
+    <div class="cred-val">Mumbai · Delhi</div>
+    <div class="cred-lbl">Office Locations</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>ITR Filing</span><span>GST Returns</span><span>Statutory Audit</span>
+    <span>Tax Planning</span><span>Corporate Advisory</span><span>Internal Audit</span>
+    <span>MCA Compliance</span><span>Transfer Pricing</span><span>FEMA Compliance</span>
+    <span>Financial Due Diligence</span>
+    <span>ITR Filing</span><span>GST Returns</span><span>Statutory Audit</span>
+    <span>Tax Planning</span><span>Corporate Advisory</span><span>Internal Audit</span>
+    <span>MCA Compliance</span><span>Transfer Pricing</span><span>FEMA Compliance</span>
+    <span>Financial Due Diligence</span>
+  </div>
+</div>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about">
+  <div class="si">
+    <div class="about-wrap">
+      <div>
+        <p class="sec-tag r">About Me</p>
+        <h2 class="sec-h r d1">A Decade of <em>Trusted</em><br>Financial Practice</h2>
+        <p class="about-lead r d2">"Financial clarity isn't a luxury — it's the foundation every business deserves."</p>
+        <p class="about-body r d3">
+          I am <strong>CA Rahul Sharma (FCA, DISA)</strong>, a practising Chartered Accountant
+          registered with the Institute of Chartered Accountants of India (ICAI) since 2014.
+          Over the past decade I have served a wide spectrum of clients — from individual
+          taxpayers and HUFs to mid-size corporates and listed entities — across industries
+          including manufacturing, real estate, healthcare, and fintech.
+          <br/><br/>
+          My practice is built on three pillars: <strong>technical accuracy</strong>,
+          <strong>regulatory timeliness</strong>, and <strong>client-first communication</strong>.
+          Every engagement is treated as a long-term relationship, not a one-time transaction.
+        </p>
+        <div class="about-pills r d4">
+          <span class="pill">Direct Taxation</span>
+          <span class="pill">GST & Indirect Tax</span>
+          <span class="pill">Statutory Audit</span>
+          <span class="pill">FEMA</span>
+          <span class="pill">Transfer Pricing</span>
+          <span class="pill">Corporate Law</span>
+        </div>
+      </div>
+
+      <div class="profile-card r d2">
+        <div class="pc-avatar"><span class="pc-initials">RS</span></div>
+        <div class="pc-name">CA Rahul Sharma</div>
+        <div class="pc-deg">B.Com (Hons.) · FCA · DISA</div>
+        <div class="pc-rows">
+          <div class="pc-row"><span class="pc-k">Firm</span><span class="pc-v">Sample &amp; Associates</span></div>
+          <div class="pc-row"><span class="pc-k">ICAI Membership</span><span class="pc-v">FCA 123456</span></div>
+          <div class="pc-row"><span class="pc-k">COP Number</span><span class="pc-v">012345</span></div>
+          <div class="pc-row"><span class="pc-k">Founded Firm</span><span class="pc-v">2015</span></div>
+          <div class="pc-row"><span class="pc-k">Qualification</span><span class="pc-v">CA · DISA (ICAI)</span></div>
+          <div class="pc-row"><span class="pc-k">Home</span><span class="pc-v">Mumbai, Maharashtra</span></div>
+          <div class="pc-row"><span class="pc-k">Office</span><span class="pc-v">Delhi NCR</span></div>
+          <div class="pc-row"><span class="pc-k">Date of Birth</span><span class="pc-v">15 Aug 1990</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="services">
+  <div class="si">
+    <p class="sec-tag r">What We Do</p>
+    <h2 class="sec-h r d1">Comprehensive <em>Professional Services</em></h2>
+    <div class="svc-grid">
+
+      <div class="svc r d1">
+        <span class="svc-ico">📄</span>
+        <div class="svc-title">Income Tax & ITR Filing</div>
+        <p class="svc-body">Precise computation and filing of income tax returns for individuals, HUFs, partnership firms, LLPs, and corporates. Includes advance tax planning, notice handling, and appellate representation before CIT(A) and ITAT.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+      <div class="svc r d2">
+        <span class="svc-ico">💰</span>
+        <div class="svc-title">GST Compliance</div>
+        <p class="svc-body">End-to-end GST services — registration, GSTR-1/3B/9/9C filing, ITC reconciliation, annual return, GST audit, departmental notices, and advisory on complex transactions including exports, RCM, and e-invoicing.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+      <div class="svc r d3">
+        <span class="svc-ico">📊</span>
+        <div class="svc-title">Statutory & Tax Audit</div>
+        <p class="svc-body">Rigorous statutory audits under the Companies Act 2013 and tax audits under Section 44AB. Independent, risk-focused audit methodology delivering meaningful management insights and compliance assurance.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+      <div class="svc r d4">
+        <span class="svc-ico">🏢</span>
+        <div class="svc-title">Company Law & MCA</div>
+        <p class="svc-body">Incorporation of companies, LLPs, and section 8 entities. Annual ROC filings, board meeting compliances, MOA/AOA amendments, charge registration, and secretarial audit support.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+      <div class="svc r d5">
+        <span class="svc-ico">🌐</span>
+        <div class="svc-title">FEMA & International Tax</div>
+        <p class="svc-body">Advisory on foreign investments (FDI/ODI), FEMA compliance, transfer pricing documentation (Form 3CEB), DTAA benefits, and assistance with RBI/FIPB filings for cross-border transactions.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+      <div class="svc r d6">
+        <span class="svc-ico">📈</span>
+        <div class="svc-title">Financial Advisory</div>
+        <p class="svc-body">Business valuation, financial due diligence for M&A, preparation of CMA data and project reports for bank financing, CFO advisory services, and cash flow planning for SMEs and startups.</p>
+        <span class="svc-more">Know More →</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══════════════ WHY CHOOSE US ══════════════ -->
+<section id="why">
+  <div class="si">
+    <div class="why-grid">
+      <div>
+        <p class="sec-tag r">Why Us</p>
+        <h2 class="sec-h r d1">The Principles <br>That <em>Drive Us</em></h2>
+        <div class="why-list">
+          <div class="why-item r d2">
+            <div class="why-num">01</div>
+            <div>
+              <div class="why-ttl">Zero Deadline Misses</div>
+              <p class="why-desc">We operate with internal deadlines set 5 days ahead of every statutory due date — ensuring zero penalties and zero surprises for our clients, ever.</p>
+            </div>
+          </div>
+          <div class="why-item r d3">
+            <div class="why-num">02</div>
+            <div>
+              <div class="why-ttl">Transparent, Fixed Fees</div>
+              <p class="why-desc">No hidden charges. Every engagement starts with a clearly written scope and fee letter so you always know exactly what you're paying for.</p>
+            </div>
+          </div>
+          <div class="why-item r d4">
+            <div class="why-num">03</div>
+            <div>
+              <div class="why-ttl">Direct Partner Access</div>
+              <p class="why-desc">You work directly with the CA — not a junior assistant. Every call, every review, and every submission is personally overseen by the principal.</p>
+            </div>
+          </div>
+          <div class="why-item r d5">
+            <div class="why-num">04</div>
+            <div>
+              <div class="why-ttl">Technology-Enabled Practice</div>
+              <p class="why-desc">Cloud accounting, digital document management, and AI-assisted review tools allow faster turnarounds without compromising on quality.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-feature r d2">
+        <div class="big-num">10+</div>
+        <div class="big-lbl">Years of Active Practice</div>
+        <div class="why-divider"></div>
+        <div class="why-sub-stats">
+          <div class="wss">
+            <div class="wss-n">500+</div>
+            <div class="wss-l">Clients Served</div>
+          </div>
+          <div class="wss">
+            <div class="wss-n">0</div>
+            <div class="wss-l">Penalties Incurred</div>
+          </div>
+          <div class="wss">
+            <div class="wss-n">₹50Cr+</div>
+            <div class="wss-l">Tax Savings Achieved</div>
+          </div>
+          <div class="wss">
+            <div class="wss-n">98%</div>
+            <div class="wss-l">Client Retention Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══════════════ JOURNEY ══════════════ -->
+<section id="journey">
+  <div class="si">
+    <p class="sec-tag r">Professional Journey</p>
+    <h2 class="sec-h r d1">A Timeline of <em>Growth</em></h2>
+    <div class="timeline">
+
+      <div class="tl-item r d1">
+        <div class="tl-year">2010–14</div>
+        <div class="tl-right">
+          <div class="tl-title">CA Foundation, Intermediate & Final — ICAI</div>
+          <div class="tl-org">Institute of Chartered Accountants of India</div>
+          <p class="tl-desc">Cleared all three levels of the CA examination in the first attempt. Completed mandatory articleship training under a Big-4 firm, gaining exposure to large-scale statutory audits, direct tax, and FEMA advisory.</p>
+        </div>
+      </div>
+
+      <div class="tl-item r d2">
+        <div class="tl-year">2014–15</div>
+        <div class="tl-right">
+          <div class="tl-title">Associate — Audit & Assurance</div>
+          <div class="tl-org">National CA Firm, Mumbai</div>
+          <p class="tl-desc">Handled statutory audits of listed companies in the FMCG and pharmaceuticals sector. Led a team of four for quarterly limited reviews and assisted in CARO reporting and Internal Financial Control assessments.</p>
+        </div>
+      </div>
+
+      <div class="tl-item r d3">
+        <div class="tl-year">2015</div>
+        <div class="tl-right">
+          <div class="tl-title">Founded Sample & Associates</div>
+          <div class="tl-org">Independent Practice, Delhi NCR</div>
+          <p class="tl-desc">Established an independent CA firm focusing on direct taxation, GST compliance, and SME advisory. Grew the client base from 12 to over 200 clients in the first three years through referrals and quality-first service.</p>
+        </div>
+      </div>
+
+      <div class="tl-item r d4">
+        <div class="tl-year">2018</div>
+        <div class="tl-right">
+          <div class="tl-title">DISA Certification</div>
+          <div class="tl-org">ICAI — Diploma in Information Systems Audit</div>
+          <p class="tl-desc">Qualified as a DISA to provide IT audit and systems advisory services. Began conducting information systems audits for NBFCs and co-operative banks, adding a technology dimension to the firm's service portfolio.</p>
+        </div>
+      </div>
+
+      <div class="tl-item r d5">
+        <div class="tl-year">2020</div>
+        <div class="tl-right">
+          <div class="tl-title">Fellow Member of ICAI (FCA)</div>
+          <div class="tl-org">Institute of Chartered Accountants of India</div>
+          <p class="tl-desc">Elevated to Fellow status upon completing five years of active practice, recognising sustained contribution to the profession. Expanded services to include Transfer Pricing, FEMA compliance, and financial due diligence for M&A transactions.</p>
+        </div>
+      </div>
+
+      <div class="tl-item r d6">
+        <div class="tl-year">2024+</div>
+        <div class="tl-right">
+          <div class="tl-title">Expanded Practice & Advisory Board Role</div>
+          <div class="tl-org">Sample & Associates (Multi-city)</div>
+          <p class="tl-desc">Opened second office in Mumbai. Serving as CFO advisor to three emerging startups. Empanelled with two nationalised banks for concurrent audit. Currently serving 500+ clients across India with a team of six professionals.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ACHIEVEMENTS ══════════════ -->
+<section id="achieve">
+  <div class="si">
+    <div class="ach-header">
+      <p class="sec-tag r">Numbers That Matter</p>
+      <h2 class="sec-h r d1">Our Practice <em>At a Glance</em></h2>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-box r d1">
+        <span class="ach-ico">🗂️</span>
+        <div class="ach-n">500+</div>
+        <div class="ach-l">Active Clients</div>
+      </div>
+      <div class="ach-box r d2">
+        <span class="ach-ico">📑</span>
+        <div class="ach-n">3,000+</div>
+        <div class="ach-l">Returns Filed Annually</div>
+      </div>
+      <div class="ach-box r d3">
+        <span class="ach-ico">🏆</span>
+        <div class="ach-n">10+</div>
+        <div class="ach-l">Years of Practice</div>
+      </div>
+      <div class="ach-box r d4">
+        <span class="ach-ico">⚖️</span>
+        <div class="ach-n">100+</div>
+        <div class="ach-l">Appeals Resolved</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="si">
+    <p class="sec-tag r">Reach Out</p>
+    <h2 class="sec-h r d1">Let's Start a <em>Conversation</em></h2>
+    <div class="contact-wrap">
+      <div>
+        <p class="contact-intro r d1">
+          Whether you need a one-time consultation or an ongoing compliance partner,
+          we're available across multiple channels. Reach out and we'll respond within one business day.
+        </p>
+
+        <div class="citem r d2">
+          <div class="cico">📞</div>
+          <div>
+            <div class="clbl">Phone / WhatsApp</div>
+            <div class="cval"><a href="tel:+919876543210">+91 98765 43210</a></div>
+          </div>
+        </div>
+        <div class="citem r d3">
+          <div class="cico">✉️</div>
+          <div>
+            <div class="clbl">Email</div>
+            <div class="cval"><a href="mailto:contact@samplefirm.com">contact@samplefirm.com</a></div>
+          </div>
+        </div>
+        <div class="citem r d4">
+          <div class="cico">🏢</div>
+          <div>
+            <div class="clbl">Mumbai Office</div>
+            <div class="cval">123, Sample Tower, Bandra West, Mumbai — 400 050</div>
+          </div>
+        </div>
+        <div class="citem r d5">
+          <div class="cico">🏢</div>
+          <div>
+            <div class="clbl">Delhi Office</div>
+            <div class="cval">456, Business Hub, Connaught Place, New Delhi — 110 001</div>
+          </div>
+        </div>
+
+        <div class="socials r d5">
+          <a href="#" class="sl"><span>💬</span> WhatsApp — Instant Query<span class="arr">↗</span></a>
+          <a href="#" class="sl"><span>🔗</span> LinkedIn — CA Rahul Sharma<span class="arr">↗</span></a>
+          <a href="#" class="sl"><span>📸</span> Instagram — @yourhandle<span class="arr">↗</span></a>
+        </div>
+      </div>
+
+      <div class="appt-card r d2">
+        <div class="appt-title">Office Hours &amp; Consultation</div>
+        <p class="appt-desc">
+          Walk-in consultations are available during office hours. For priority scheduling,
+          please call or WhatsApp ahead to confirm availability.
+          Virtual meetings via Google Meet or Zoom are also available.
+        </p>
+        <div class="appt-avail">
+          <div class="avail-row"><span class="avail-day">Monday – Friday</span><span class="avail-hrs">10:00 AM – 7:00 PM</span></div>
+          <div class="avail-row"><span class="avail-day">Saturday</span><span class="avail-hrs">10:00 AM – 2:00 PM</span></div>
+          <div class="avail-row"><span class="avail-day">Sunday</span><span class="avail-hrs">By appointment only</span></div>
+        </div>
+        <a href="tel:+919876543210" class="btn btn-silver" style="width:100%;justify-content:center;margin-top:.5rem;">
+          <span>Call Now — +91 98765 43210</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">CA Rahul Sharma · FCA</div>
+  <ul class="foot-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="foot-copy">Designed by [Your Name] · © 2025 All Rights Reserved</div>
+</footer>
+
+<script>
+/* ── Cursor ── */
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){
+  cur.style.cssText=`left:${mx}px;top:${my}px`;
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  ring.style.cssText=`left:${rx}px;top:${ry}px`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.svc,.stat-box,.ach-box,.why-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='9px';cur.style.height='9px';ring.style.width='34px';ring.style.height='34px';});
+});
+
+/* ── Sticky nav ── */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+/* ── Scroll reveal ── */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
